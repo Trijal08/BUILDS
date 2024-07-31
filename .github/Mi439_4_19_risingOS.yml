@@ -1,0 +1,77 @@
+name: Mi439 risingOS 4.X
+on:
+  workflow_dispatch
+  
+concurrency:
+  group: ${{  github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Repo_git:
+    runs-on: self-hosted
+    steps:
+      - name: Setup git and install repo
+        run: |
+          git config --global user.email "rom-builder@rest.eu.org"
+          git config --global user.name "ROM BUILDER"
+          git config --global pull.rebase true  
+          sudo apt-get update -y && sudo apt-get install repo -y
+          
+  depends:
+    runs-on: self-hosted
+    steps:
+      - name: Install requirerd dependencies
+        run: sudo apt-get install git-core gnupg flex bison build-essential zip curl zlib1g-dev libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip openssl libssl-dev fontconfig git-lfs -y
+        
+  Clone_local_manifests:
+    runs-on: self-hosted
+    needs: [Repo_git]
+    steps:
+      - name: Clone local_manifests
+        run: git clone https://github.com/Trijal08/local_manifests --depth 1 -b RisingOS-4.x .repo/local_manifests
+    
+
+  Setup_source:
+    runs-on: self-hosted
+    needs: [Repo_git]
+    steps:
+      - name: Setup source
+        run: git-lfs install && repo init --depth=1 --no-repo-verify -u https://github.com/RisingTechOSS/android -b fourteen  --git-lfs -g default,-mips,-darwin,-notdefault || echo "Already done"
+        
+  Sync_source:
+    runs-on: self-hosted
+    needs: Setup_source
+    steps:
+      - name: Delete existing builds folders
+        run: rm -rf out/target/product/Mi439_4_19 || echo "Doesn't exist"
+        
+      - name: Sync source
+        run: repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
+        
+  Build_rom_vanilla:
+    runs-on: self-hosted
+    needs: [Sync_source, depends, Clone_local_manifests]
+    steps:
+      - name: Build Vanilla
+        run: . build/envsetup.sh && riseup Mi439_4_19 userdebug && export WITH_GMS=false && rise b | tee log.txt
+        
+  Build_rom_gapps:
+    runs-on: self-hosted
+    needs: Build_rom_vanilla
+    steps:
+      - name: Build Gapps
+        run: . build/envsetup.sh && riseup Mi439_4_19 userdebug && export WITH_GMS=true && rise b | tee log.txt
+        
+  Release:
+    runs-on: self-hosted
+    needs: [Build_rom_vanilla, Build_rom_gapps]
+    steps:
+        - name: Prepare tag
+          id: tag_code
+          run: echo "TAG=$(date +'v%d-%m-%Y-%H%M%S')" >> $GITHUB_OUTPUT
+
+        - name: Upload to Artifacts
+          uses: actions/upload-artifact@v4.3.4
+          with:
+            name: Artifacts
+            path: out/target/product/Mi439_4_19/RisingOS*
