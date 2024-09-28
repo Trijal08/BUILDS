@@ -9,7 +9,7 @@ GIT_EMAIL="rom-builder@rest.eu.org"
 
 # Required: Personal Access Token from GitHub with permissions repo, admin:repo_hook, user
 # Better set it as a secret in your GitHub repo settings
-# RELEASE_GITHUB_TOKEN="" 
+RELEASE_GITHUB_TOKEN="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" 
 
 # Required: Repository owner/repo to upload and release build files
 GITHUB_RELEASE_REPO="rom-builder/$DEVICE-$ROM_NAME"
