@@ -1,8 +1,8 @@
 {
   "repos": [
     {
-      "repo": "https://github.com/anandhan07/local_manifest.git",
-      "branch": "risingOS-13.0",
+      "repo": "https://github.com/Trijal08/local_manifests.git",
+      "branch": "PixelStar_OS-shusky",
       "dir": ".repo/local_manifests",
       "before_sync": true
     }
