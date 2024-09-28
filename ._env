@@ -1,6 +1,6 @@
 # Required: Device codename
-DEVICE="vince"
-ROM_NAME="risingOS"
+DEVICE="husky"
+ROM_NAME="PixelStar OS"
 
 # Required: git username
 GIT_NAME="ROMBUILDER"
@@ -50,7 +50,7 @@ SETUP_SOURCE_COMMAND="repo init --depth=1 --no-repo-verify -u https://github.com
 # PRE_SYNC_SOURCE_COMMAND=""
 
 # Required:
-SYNC_SOURCE_COMMAND="repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8"
+SYNC_SOURCE_COMMAND="repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)"
 
 # Optional: If you have any post command to run after syncing source
 # POST_SYNC_SOURCE_COMMAND=""
