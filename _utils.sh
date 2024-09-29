@@ -62,13 +62,14 @@ logt() {
 resolve_dependencies() {
   # Remove repo if it exists as it is outdated
   sudo apt-get remove -y repo || apt-get remove -y repo
-  local packages=('git-core' 'gnupg' 'flex' 'bison' 'build-essential' 'zip' 'curl' 'zlib1g-dev' 'libc6-dev-i386' 'libncurses5' 'lib32ncurses5-dev' 'x11proto-core-dev' 'libx11-dev' 'lib32z1-dev' 'libgl1-mesa-dev' 'libxml2-utils' 'xsltproc' 'unzip' 'openssl' 'libssl-dev' 'fontconfig' 'jq' 'openjdk-8-jdk' 'gperf' 'python-is-python3' 'ccache' 'sshpass')
+  local packages=('git' 'git-lfs' 'gnupg' 'flex' 'bison' 'build-essential' 'zip' 'curl' 'zlib1g-dev' 'libc6-dev-i386' 'libncurses5' 'lib32ncurses5-dev' 'x11proto-core-dev' 'libx11-dev' 'lib32z1-dev' 'libgl1-mesa-dev' 'libxml2-utils' 'xsltproc' 'unzip' 'openssl' 'libssl-dev' 'fontconfig' 'jq' 'openjdk-8-jdk' 'gperf' 'python-is-python3' 'ccache' 'sshpass')
   echo "Updating package lists..."
   sudo apt-get update -y || apt-get update -y
   echo "Installing dependencies..."
   sudo apt-get install -y "${packages[@]}" || apt-get install -y "${packages[@]}"
   # Download latest repo from Google Storage
   sudo curl https://storage.googleapis.com/git-repo-downloads/repo -o /usr/local/bin/repo && sudo chmod a+x /usr/local/bin/repo
+  git-lfs install
   export USE_CCACHE=1
   export CCACHE_EXEC=$(which ccache)
   echo "Dependencies check complete."
