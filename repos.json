@@ -5,12 +5,6 @@
       "branch": "PixelStar_OS-shusky",
       "dir": ".repo/local_manifests",
       "before_sync": true
-    },
-    {
-      "repo": "https://github.com/Project-PixelStar/vendor_google_pixel-framework.git",
-      "branch": "14-qpr3",
-      "dir": "vendor/google/pixel-framework",
-      "before_sync": true
     }
   ]
 }
