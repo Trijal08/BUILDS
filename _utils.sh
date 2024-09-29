@@ -69,7 +69,7 @@ resolve_dependencies() {
   sudo apt-get install -y "${packages[@]}" || apt-get install -y "${packages[@]}"
   # Download latest repo from Google Storage
   sudo curl https://storage.googleapis.com/git-repo-downloads/repo -o /usr/local/bin/repo && sudo chmod a+x /usr/local/bin/repo
-  git-lfs install
+  git lfs install
   export USE_CCACHE=1
   export CCACHE_EXEC=$(which ccache)
   echo "Dependencies check complete."
