@@ -62,7 +62,7 @@ logt() {
 resolve_dependencies() {
   # Remove repo if it exists as it is outdated
   sudo apt-get remove -y repo || apt-get remove -y repo
-  local packages=('bc' 'bison' 'build-essential' 'ccache' 'curl' 'flex' 'g++-multilib' 'gcc-multilib' 'git' 'git-lfs' 'gnupg' 'gperf' 'imagemagick' 'lib32readline-dev' 'lib32z1-dev' 'libelf-dev' 'liblz4-tool' 'libsdl1.2-dev' 'libssl-dev' 'libxml2' 'libxml2-utils' 'lzop' 'pngcrush' 'rsync' 'schedtool' 'squashfs-tools' 'xsltproc' 'zip' 'zlib1g-dev')
+  local packages=('bc' 'bison' 'build-essential' 'ccache' 'curl' 'flex' 'g++-multilib' 'gcc-multilib' 'git' 'git-lfs' 'gnupg' 'gperf' 'imagemagick' 'lib32readline-dev' 'lib32z1-dev' 'libelf-dev' 'liblz4-tool' 'libsdl1.2-dev' 'libssl-dev' 'libxml2' 'libxml2-utils' 'lzop' 'pngcrush' 'rsync' 'schedtool' 'squashfs-tools' 'xsltproc' 'zip' 'zlib1g-dev' 'jq')
   echo "Updating package lists..."
   sudo apt-get update -y || apt-get update -y
   echo "Installing dependencies..."
