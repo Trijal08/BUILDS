@@ -62,11 +62,14 @@ logt() {
 resolve_dependencies() {
   # Remove repo if it exists as it is outdated
   sudo apt-get remove -y repo || apt-get remove -y repo
-  local packages=('git' 'gnupg' 'flex' 'bison' 'build-essential' 'zip' 'curl' 'zlib1g-dev' 'libc6-dev-i386' 'libncurses5' 'lib32ncurses5-dev' 'x11proto-core-dev' 'libx11-dev' 'lib32z1-dev' 'libgl1-mesa-dev' 'libxml2-utils' 'xsltproc' 'unzip' 'openssl' 'libssl-dev' 'fontconfig' 'jq' 'openjdk-8-jdk' 'gperf' 'python-is-python3' 'ccache' 'sshpass')
+  local packages=('bc' 'bison' 'build-essential' 'ccache' 'curl' 'flex' 'g++-multilib' 'gcc-multilib' 'git' 'git-lfs' 'gnupg' 'gperf' 'imagemagick' 'lib32readline-dev' 'lib32z1-dev' 'libelf-dev' 'liblz4-tool' 'libsdl1.2-dev' 'libssl-dev' 'libxml2' 'libxml2-utils' 'lzop' 'pngcrush' 'rsync' 'schedtool' 'squashfs-tools' 'xsltproc' 'zip' 'zlib1g-dev')
+ * https://github.com/Hasajapathirana/Recovery_CI)
   echo "Updating package lists..."
   sudo apt-get update -y || apt-get update -y
   echo "Installing dependencies..."
   sudo apt-get install -y "${packages[@]}" || apt-get install -y "${packages[@]}"
+  wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.4-2_amd64.deb && sudo dpkg -i libtinfo5_6.4-2_amd64.deb && rm -f libtinfo5_6.4-2_amd64.deb
+  wget http://archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.4-2_amd64.deb && sudo dpkg -i libncurses5_6.4-2_amd64.deb && rm -f libncurses5_6.4-2_amd64.deb
   curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
   # Download latest repo from Google Storage
   sudo curl https://storage.googleapis.com/git-repo-downloads/repo -o /usr/local/bin/repo && sudo chmod a+x /usr/local/bin/repo
